@@ -1,75 +1,86 @@
-from fungsi_nilai import (
-    nilai_ke_label,
-    label_ke_bobot,
-    hitung_total_sks,
-    hitung_total_nilai,
-    hitung_ips
-)
+from logika import *
 
 while True:
     print("\nMENU")
-    print("1. Konversi nilai ke label")
-    print("2. Konversi label ke bobot")
-    print("3. Hitung total SKS yang diambil")
-    print("4. Hitung total nilai")
+    print("1. Konversi Nilai ke Label")
+    print("2. Konversi Label ke Bobot")
+    print("3. Hitung Total SKS")
+    print("4. Hitung Total Nilai")
     print("5. Hitung IPS")
     print("6. Exit")
 
-    pilihan = input("Pilih menu: ")
+    pilihan = input("Pilihan: ")
 
+    # MENU 1
     if pilihan == "1":
-        nilai = int(input("Masukkan nilai: "))
+        nilai = float(input("Nilai Mahasiswa: "))
         print("Label:", nilai_ke_label(nilai))
 
+    # MENU 2
     elif pilihan == "2":
-        label = input("Masukkan label (A-E): ").upper()
+        label = input("Label: ")
         print("Bobot:", label_ke_bobot(label))
 
+    # MENU 3
     elif pilihan == "3":
-        n = int(input("Jumlah mata kuliah: "))
-        sks = []
-        for i in range(n):
-            sks.append(int(input(f"SKS ke-{i+1}: ")))
-        print("Total SKS:", hitung_total_sks(sks))
+        jumlah = int(input("Jumlah Data: "))
+        sks_list = []
 
+        for i in range(jumlah):
+            sks_list.append(int(input(f"SKS {i+1}: ")))
+
+        print("Total SKS:", hitung_total_sks(sks_list))
+
+    # MENU 4
     elif pilihan == "4":
-        n = int(input("Jumlah mata kuliah: "))
-        sks = []
-        nilai = []
+        jumlah = int(input("Jumlah Data: "))
+        sks_list = []
+        bobot_list = []
 
-        print("Input SKS")
-        for i in range(n):
-            sks.append(int(input(f"SKS ke-{i+1}: ")))
+        print("\n--- input SKS ---")
+        for i in range(jumlah):
+            sks_list.append(int(input(f"SKS {i+1}: ")))
 
-        print("Input Nilai Mahasiswa")
-        for i in range(n):
-            nilai.append(int(input(f"Nilai ke-{i+1}: ")))
+        print("\n--- input Nilai Mahasiswa ---")
+        for i in range(jumlah):
+            nilai = float(input(f"Nilai {i+1}: "))
+            label = nilai_ke_label(nilai)
+            bobot = label_ke_bobot(label)
+            bobot_list.append(bobot)
 
-        total_nilai = hitung_total_nilai(nilai, sks)
-        print("Total Nilai:", total_nilai)
+        if len(sks_list) != len(bobot_list):
+            print("Jumlah bobot dan SKS tidak sama")
+        else:
+            total_nilai = hitung_total_nilai(sks_list, bobot_list)
+            print("Total Nilai:", total_nilai)
 
+    # MENU 5
     elif pilihan == "5":
-        n = int(input("Jumlah mata kuliah: "))
-        sks = []
-        nilai = []
+        jumlah = int(input("Jumlah Data: "))
+        sks_list = []
+        bobot_list = []
 
-        print("Input SKS")
-        for i in range(n):
-            sks.append(int(input(f"SKS ke-{i+1}: ")))
+        print("\n--- input SKS ---")
+        for i in range(jumlah):
+            sks_list.append(int(input(f"SKS {i+1}: ")))
 
-        print("Input Nilai Mahasiswa")
-        for i in range(n):
-            nilai.append(int(input(f"Nilai ke-{i+1}: ")))
+        print("\n--- input Nilai Mahasiswa ---")
+        for i in range(jumlah):
+            nilai = float(input(f"Nilai {i+1}: "))
+            label = nilai_ke_label(nilai)
+            bobot = label_ke_bobot(label)
+            bobot_list.append(bobot)
 
-        total_sks = hitung_total_sks(sks)
-        total_nilai = hitung_total_nilai(nilai, sks)
+        total_sks = hitung_total_sks(sks_list)
+        total_nilai = hitung_total_nilai(sks_list, bobot_list)
         ips = hitung_ips(total_nilai, total_sks)
 
         print("IPS:", round(ips, 2))
 
+    # EXIT
     elif pilihan == "6":
-        print("Program selesai.")
+        print("Program selesai")
         break
 
     else:
-        print("Menu tidak valid!")
+        print("Pilihan tidak valid")
